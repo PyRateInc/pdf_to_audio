@@ -35,6 +35,9 @@ class App(tk.Frame):
         self.quit = tk.Button(self, text="Quit", fg="yellow", bg="black", command=self.close_window)
         self.quit.pack(side="bottom")
 
+    def pause_window(self):
+        pass
+
     def close_window(self):
         ''' Função pra fechar a janela principal (parent) e qualquer dependente (children). '''
         Tk.destroy(root)
