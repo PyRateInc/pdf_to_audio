@@ -1,0 +1,18 @@
+# Created by https://www.toptal.com/developers/gitignore/api/code,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=code,visualstudiocode
+
+### Code ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+### VisualStudioCode ###
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
+# End of https://www.toptal.com/developers/gitignore/api/code,visualstudiocode

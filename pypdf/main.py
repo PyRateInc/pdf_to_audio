@@ -24,6 +24,8 @@ class App(tk.Frame):
         self.master.minsize(260, 120)
         # Estabelece o tamanho MAX da janela principal
         self.master.maxsize(640, 360)
+        # Inicia o player com o pyttsx
+        self.player = pyttsx3.init()
 
     def create_widgets(self):
         # Cria um botão "Choose file..." com comando da função "askopenfilename"
@@ -38,8 +40,25 @@ class App(tk.Frame):
     def pause_window(self):
         pass
 
+    """ def get_propery(self):
+        Pode se colocar as defs rate e a volume aqui e deixá-las como parametros """
+
+    def rate(self):
+        """ Função que determina quantas palavras por minuto, por padrão é 200 palavras por minuto """
+        # Obtem detalhes da taxa atual de fala
+        rate = engine.getProperty('rate')
+        print (rate)
+        engine.setProperty('rate', 100)
+
+    def volume(self):
+        # Reconhece o nível de volume atual (min = 0 e max = 1)
+        volume = self.player.getProperty('volume')
+        print (volume)
+        # Configura o nível do volume entre 0 e 1
+        self.player.setProperty('volume',1.0)
+
     def close_window(self):
-        ''' Função pra fechar a janela principal (parent) e qualquer dependente (children). '''
+        """ Função pra fechar a janela principal (parent) e qualquer dependente (children). """
         Tk.destroy(root)
 
     def reading(self):
@@ -53,9 +72,8 @@ class App(tk.Frame):
         for num in range(0, pages):
             page = pdfreader.getPage(num)
             text = page.extractText()
-            player = pyttsx3.init()
-            player.say(text)
-            player.runAndWait()
+            self.player.say(text)
+            self.player.runAndWait()
 
 
 if __name__ == "__main__":
