@@ -37,7 +37,7 @@ class App(tk.Frame):
         self.quit = tk.Button(self, text="Quit", fg="yellow", bg="black", command=self.close_window)
         self.quit.pack(side="bottom")
 
-    def pause_window(self):
+    def save_state(self):
         pass
 
     """ def get_propery(self):
