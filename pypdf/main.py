@@ -19,6 +19,11 @@ class App(Frame):
         # self.pack()
         self.create_widgets()
         # Estabelece um título
+        root.title("PDF Reader")
+        # Mantém fixo o tamnho da janela
+        root.geometry('{}x{}'.format(360, 240))
+        root.resizable(width=False, height=False)
+        engine.isBusy = False
 
     def create_widgets(self):
         # Cria uma tela inicial
@@ -64,30 +69,32 @@ class App(Frame):
         # Configura o nível do volume entre 0 e 1
         engine.setProperty('volume', 1.0)
 
-    def save_state(self):
-        pass
-
-    """ def get_propery(self):
-        Pode se colocar as defs rate e a volume aqui e deixá-las como parametros """
-
-    def rate(self):
-        """ Função que determina quantas palavras por minuto, por padrão é 200 palavras por minuto """
-        # Obtem detalhes da taxa atual de fala
-        rate = engine.getProperty('rate')
-        print (rate)
-        engine.setProperty('rate', 100)
-
-    def volume(self):
-        # Reconhece o nível de volume atual (min = 0 e max = 1)
-        volume = self.player.getProperty('volume')
-        print (volume)
-        # Configura o nível do volume entre 0 e 1
-        self.player.setProperty('volume',1.0)
-
     def close_window(self):
         """ Função pra fechar a janela principal (parent) e qualquer dependente (children). """
+        print("Window destroyed.")
+        root.destroy()
 
-        Tk.destroy(root)
+    def extract_txt(self):
+        # RESOLVIDO
+        # RESOLVIDO
+        # RESOLVIDO
+        book = askopenfile(parent=root, mode="rb", title="Choose a PDF file")
+        if book != None:
+            pdfReader = PyPDF4.PdfFileReader(book)
+            global pdfTxt
+            pdfTxt = ""
+            for num in range(pdfReader.numPages):
+                page = pdfReader.getPage(num)
+                pdfTxt += page.extractText()
+            book.close()
+        if pdfReader != None:
+            # Propósito para debug: Ver se o objeto é alocado em memória
+            print(f"Objeto está em {pdfReader}.")
+            print("File is ready.")
+        else:
+            # Propósito para debug: Ver se o objeto NÃO é alocado em memória
+            print(f"Objeto {pdfReader}NÃO está em memória.")
+            print("Operation canceled.")
 
     def read_txt(self):
         # Problema! Ainda não consegui fazer parar a leitura, apesar de que a "stop_func" funciona!
@@ -100,11 +107,15 @@ class App(Frame):
         else:
             print("File is not loaded")
 
-        for num in range(0, pages):
-            page = pdfreader.getPage(num)
-            text = page.extractText()
-            self.player.say(text)
-            self.player.runAndWait()
+    def stop_func(self):
+        print("Trying to stop it. Please wait...")
+        if engine.isBusy == True:
+            engine.stop()
+            print("Reading stopped.")
+            engine.isBusy = False
+        else:
+            print("Reading was NOT running.")
+
 
 if __name__ == "__main__":
     pdfTxt = ""  # Variável global
