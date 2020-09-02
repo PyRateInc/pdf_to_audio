@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8-*-
 
+import os
+from gtts import gTTS
+from PyPDF4 import PdfFileReader
+
 ''' Feito por: Dimitri(Taikamya) e Pablo III(Nemo) '''
 _authors = ["Dimitri", "Pablo III"]
-
 """
     Nota dos autores:
-    Como a ideia é lançar o mais rápido possível, criei uma função que lê em inglês, e outra em português, com o tempo, otimizamos.
+    Como a ideia é lançar o mais rápido possível, criei uma função que lê em inglês, e outra em português. Com o tempo, otimizamos.
 """
 
-from gtts import gTTS
-import os
-from PyPDF2 import PdfFileReader
-
 def extract_information_en(pdf_path):
+    ''' Extract info, play and save to file. Language is set to "en"(English). '''
     with open(pdf_path, 'rb') as f:
         pdf = PdfFileReader(f)
         information = pdf.getDocumentInfo()
@@ -36,6 +36,7 @@ def extract_information_en(pdf_path):
     return information
 
 def extract_information_pt_br(pdf_path):
+    ''' Extract info, play and save to file. Language is set to "pt-br"(Brazilian Portuguese). '''
     with open(pdf_path, 'rb') as f:
         pdf = PdfFileReader(f)
         information = pdf.getDocumentInfo()
@@ -56,6 +57,7 @@ def extract_information_pt_br(pdf_path):
 
     print(txt)
     return information
+
 
 if __name__ == '__main__':
     path = "01OPistoleiroStephenKing.pdf"
